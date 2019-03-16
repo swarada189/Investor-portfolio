@@ -9,14 +9,15 @@ import numpy as np
 import datetime
 from sys import exit
 import fix_yahoo_finance as yf
+#import stock_info module from yahoo_fin
+from yahoo_fin import stock_info as si
+yf.pdr_override() 
 
 app = Flask(__name__)
 CORS(app)
 
 def moneyARC():
-    #import stock_info module from yahoo_fin
-    from yahoo_fin import stock_info as si
-    yf.pdr_override() 
+    
     #Initialise dates
     start_date="2018-09-12"
     end2 = "2018-09-13"

@@ -117,15 +117,6 @@ with open('findata.json','w') as outfile:
     json.dump(data,outfile)
 
 
-# In[ ]:
-
-
-#import json
-#with open('data.json','w') as outfile:
- #   json.dump(stockPF.to_json(orient='table'),outfile)
-
-
-# In[ ]:
 
 
 

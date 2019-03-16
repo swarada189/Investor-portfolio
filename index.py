@@ -10,7 +10,7 @@ import datetime
 from sys import exit
 import fix_yahoo_finance as yf
 #import stock_info module from yahoo_fin
-from yahoo_fin import stock_info as si
+#from yahoo_fin import stock_info as si
 yf.pdr_override() 
 
 app = Flask(__name__)
@@ -35,12 +35,15 @@ def moneyARC():
 
     # In[26]:
 
-
-
-    stockPF["CUR_PRICE"][0]= si.get_live_price('BARC.L')
-    stockPF["CUR_PRICE"][1]= si.get_live_price('VOD.L')
-    stockPF["CUR_PRICE"][2]= si.get_live_price('SSE.L')
-    stockPF["CUR_PRICE"][3]= si.get_live_price('MCRO.L')
+    pdr.get_data_yahoo('BARC.L',start=start_date,end=start_date)
+    pdr.get_data_yahoo('VOD.L',start=start_date,end=start_date)
+    pdr.get_data_yahoo('SSE.L',start=start_date,end=start_date)
+    pdr.get_data_yahoo('MCRO.L',start=start_date,end=start_date)
+    
+    #stockPF["CUR_PRICE"][0]= si.get_live_price('BARC.L')
+    #stockPF["CUR_PRICE"][1]= si.get_live_price('VOD.L')
+    #stockPF["CUR_PRICE"][2]= si.get_live_price('SSE.L')
+    #stockPF["CUR_PRICE"][3]= si.get_live_price('MCRO.L')
 
 
     # In[27]:

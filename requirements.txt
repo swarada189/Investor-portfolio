@@ -13,3 +13,4 @@ fix-yahoo-finance
 numpy
 pandas
 datetime
+yahoo_fin

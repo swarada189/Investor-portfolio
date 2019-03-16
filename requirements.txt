@@ -13,5 +13,6 @@ fix-yahoo-finance
 numpy
 pandas
 datetime
+parsedatetime
 yahoo_fin
 xlrd

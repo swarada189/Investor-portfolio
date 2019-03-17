@@ -11,7 +11,9 @@ from sys import exit
 import fix_yahoo_finance as yf
 #import stock_info module from yahoo_fin
 #from yahoo_fin import stock_info as si
-yf.pdr_override() 
+yf.pdr_override()
+
+import PredictStock as pred
 
 app = Flask(__name__)
 CORS(app)
@@ -50,8 +52,8 @@ def moneyARC():
 
 
     stockPF["FUND_VAL"] = stockPF["QTY"] * stockPF["CUR_PRICE"]
-    stockPF["PRO/LOSS"] = stockPF["CUR_PRICE"] - stockPF["PCH_PRICE"]
-    stockPF["PERC"] = stockPF["PRO/LOSS"] / stockPF["PCH_PRICE"]
+    stockPF["PRO_LOSS"] = stockPF["CUR_PRICE"] - stockPF["PCH_PRICE"]
+    stockPF["PERC"] = stockPF["PRO_LOSS"] / stockPF["PCH_PRICE"]
     stockPF
 
 
@@ -82,33 +84,35 @@ def moneyARC():
         neg = 1
     else:
         neg=0
-
+    delID = abs(round(delID,3))
 
     # In[36]:
 
 
-    stockPF["CONTRI"] = (stockPF["PRO/LOSS"]*stockPF["QTY"])/prevPF
-    stockPF
+    stockPF["CONTRI"] = (stockPF["PRO_LOSS"]*stockPF["QTY"])/prevPF
+    #stockPF
 
 
-    # In[42]:
-
+    #input from ML module:
+    predictedValue = pred.myPrediction()
 
     import json
     data =  {'acc_value':float(currPF),'buying_power':190000,'cash':210000,'annual_ret':0.49,
             'ftse':currID,
             'del_index':delID,
             'del_pf':delPF,
-            'ID_updown':neg}
+            'ID_updown':neg,
+            'pred_index':float(predictedValue)}
     data['stocks'] = []
     for i in range(0,4):
         data['stocks'].append({'company':stockPF['COMP'][i],
                             'symbol':stockPF['SYM'][i],
+                            'sector':stockPF['SECT'][i],
                             'pprice':float(stockPF['PCH_PRICE'][i]),
                             'qty':float(stockPF['QTY'][i]),
                             'cprice':float(stockPF['CUR_PRICE'][i]),
                                 'fund':float(stockPF['FUND_VAL'][i]),
-                            'pro-loss':float(stockPF['PRO/LOSS'][i]),
+                            'pro_loss':float(stockPF['PRO_LOSS'][i]),
                             'perc':float(stockPF['PERC'][i]),
                             'contri':float(stockPF['CONTRI'][i])})
     return data
@@ -154,5 +158,5 @@ def index():
 def get_multiply10(num):
     return jsonify({'result': num*20})
 
-#if __name__ == '__main__':
-    #app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)

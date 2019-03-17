@@ -23,7 +23,7 @@ def moneyARC():
     #Initialise dates
     start_date="2018-09-12"
     end2 = "2018-09-13"
-    end_date="2019-03-15"
+    end_date="2019-03-14"
     today=datetime.date.today()
 
 
@@ -37,10 +37,10 @@ def moneyARC():
 
     # In[26]:
 
-    pdr.get_data_yahoo('BARC.L',start=start_date,end=start_date)
-    pdr.get_data_yahoo('VOD.L',start=start_date,end=start_date)
-    pdr.get_data_yahoo('SSE.L',start=start_date,end=start_date)
-    pdr.get_data_yahoo('MCRO.L',start=start_date,end=start_date)
+    stockPF["CUR_PRICE"][0] = (pdr.get_data_yahoo('BARC.L',start=end_date,end=end_date))["Open"]
+    stockPF["CUR_PRICE"][1] = pdr.get_data_yahoo('VOD.L',start=end_date,end=end_date)["Open"]
+    stockPF["CUR_PRICE"][2] = pdr.get_data_yahoo('SSE.L',start=end_date,end=end_date)["Open"]
+    stockPF["CUR_PRICE"][3] = pdr.get_data_yahoo('MCRO.L',start=end_date,end=end_date)["Open"]
     
     #stockPF["CUR_PRICE"][0]= si.get_live_price('BARC.L')
     #stockPF["CUR_PRICE"][1]= si.get_live_price('VOD.L')
@@ -77,7 +77,7 @@ def moneyARC():
     # In[35]:
 
 
-    currID = pdr.get_data_yahoo('^FTSE',start="2019-03-16",end="2019-03-17")
+    currID = pdr.get_data_yahoo('^FTSE',start=end_date,end=end_date)
     currID = float(currID["Close"])
     delID = (currID - prevID)/prevID
     if delID < 0:
@@ -97,7 +97,7 @@ def moneyARC():
     predictedValue = pred.myPrediction()
 
     import json
-    data =  {'acc_value':float(currPF),'buying_power':190000,'cash':210000,'annual_ret':0.49,
+    data =  {'acc_value':float(currPF),'buying_power':190000,'cash':210000,'annual_ret':0.49,'prev_value':float(prevPF),
             'ftse':currID,
             'del_index':delID,
             'del_pf':delPF,
@@ -115,9 +115,10 @@ def moneyARC():
                             'pro_loss':float(stockPF['PRO_LOSS'][i]),
                             'perc':float(stockPF['PERC'][i]),
                             'contri':float(stockPF['CONTRI'][i])})
-    return data
     #with open('findata.json','w') as outfile:
         #json.dump(data,outfile)
+    return data
+    
 def getArriaContent():
     null = None
     url = 'https://app.studio.arria.com:443/alite_content_generation_webapp/text/onNQNMR0N7Q'

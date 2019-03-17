@@ -159,5 +159,5 @@ def index():
 def get_multiply10(num):
     return jsonify({'result': num*20})
 
-if __name__ == '__main__':
-    app.run(debug=True)
+#if __name__ == '__main__':
+    #app.run(debug=True)

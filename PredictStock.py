@@ -5,8 +5,8 @@ from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
-import matplotlib.pyplot as plt
-from matplotlib import style
+#import matplotlib.pyplot as plt
+#from matplotlib import style
 
 def myPrediction():
     df = pd.read_csv("FTSE.csv")

@@ -141,10 +141,18 @@ def index():
         return jsonify({'you sent' : some_json}),201
     else:
         resultant = getArriaContent()
-        return jsonify({'ArriaText': resultant})
+        text = resultant.split('<p>')
+        mydict = {}
+        i=0
+        for para in text:
+            if len(para)>0:
+                mydict[i]=para
+                i+=1 
+        raw_data = moneyARC()
+        return jsonify({'ArriaText': mydict, 'raw_data': raw_data })
 @app.route('/multi/<int:num>',methods=['GET'])
 def get_multiply10(num):
     return jsonify({'result': num*20})
 
 #if __name__ == '__main__':
-     #app.run(debug=True)
+    #app.run(debug=True)
